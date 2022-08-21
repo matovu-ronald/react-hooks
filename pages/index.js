@@ -1,29 +1,35 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useState } from "react";
 
 export default function Home() {
-  const sound = useRef();
-  const color = useRef();
+  const [sound, setSound] = useState("");
+  const [color, setColor] = useState("#000000");
 
   const submit = (e) => {
     e.preventDefault();
-    const soundValue = sound.current.value;
-    const colorValue = color.current.value;
-    alert(`${soundValue} sounds like ${colorValue}`);
-    sound.current.value = "";
-    color.current.value = "";
+
+    alert(`${sound} sounds like ${color}`);
+    setSound("");
+    setColor("");
   };
 
   return (
     <Fragment>
       <form onSubmit={submit}>
         <input
-          ref={sound}
+          value={sound}
+          onChange={(e) => setSound(e.target.value)}
           type="text"
           name="sound"
           id="sound"
           placeholder="Sound..."
         />
-        <input ref={color} type="color" name="color" id="color" />
+        <input
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+          type="color"
+          name="color"
+          id="color"
+        />
         <button type="submit">ADD</button>
       </form>
     </Fragment>
