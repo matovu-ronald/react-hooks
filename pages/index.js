@@ -1,31 +1,31 @@
-import { Fragment, useEffect, useReducer, useState } from "react";
-
-const initialState = {
-  message: "hi",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "yell":
-      return {
-        message: `HEY! I JUST SAID ${state.message}`,
-      };
-
-    case "whisper":
-      return {
-        message: `excuse me I JUST SAID ${state.message}`,
-      };
-  }
-}
+import { Fragment, useRef } from "react";
 
 export default function Home() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const sound = useRef();
+  const color = useRef();
+
+  const submit = (e) => {
+    e.preventDefault();
+    const soundValue = sound.current.value;
+    const colorValue = color.current.value;
+    alert(`${soundValue} sounds like ${colorValue}`);
+    sound.current.value = "";
+    color.current.value = "";
+  };
 
   return (
     <Fragment>
-      <p>Message: {state.message}</p>
-      <button onClick={() => dispatch({ type: "yell" })}>YELL</button>
-      <button onClick={() => dispatch({ type: "whisper" })}>Whisper</button>
+      <form onSubmit={submit}>
+        <input
+          ref={sound}
+          type="text"
+          name="sound"
+          id="sound"
+          placeholder="Sound..."
+        />
+        <input ref={color} type="color" name="color" id="color" />
+        <button type="submit">ADD</button>
+      </form>
     </Fragment>
   );
 }
