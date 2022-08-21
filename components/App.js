@@ -1,8 +1,8 @@
-import { Fragment, useContext } from "react";
-import { TreesContext } from "../pages";
+import { Fragment } from "react";
+import { useTrees } from "../pages";
 
 const App = () => {
-  const { trees } = useContext(TreesContext);
+  const { trees } = useTrees();
   console.log(trees);
   return (
     <Fragment>

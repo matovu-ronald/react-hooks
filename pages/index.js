@@ -1,7 +1,9 @@
-import { createContext, Fragment } from "react";
+import { createContext, Fragment, useContext } from "react";
 import App from "../components/App";
 
-export const TreesContext = createContext();
+const TreesContext = createContext();
+
+export const useTrees = () => useContext(TreesContext);
 
 const trees = [
   { id: 1, name: "Oak" },
