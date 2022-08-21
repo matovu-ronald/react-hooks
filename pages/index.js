@@ -1,12 +1,27 @@
-import { Fragment, useState } from "react";
-import StarRating from "../components/StarRating";
+import { Fragment, useEffect, useState } from "react";
 
 export default function Home() {
-  const [checked, setChecked] = useState(false);
+  const [name, setName] = useState("Matovu");
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    document.title = `Celebrate ${name}`;
+  }, [name]);
+
+  useEffect(() => {
+    console.log(`The user is : ${admin ? "admin" : "not admin"}`);
+  }, [admin]);
 
   return (
     <Fragment>
-      <StarRating totalStars={10} />
+      <section>
+        <p>Congratulations {name}</p>
+        <button onClick={() => setName("Nakibirige")}>Change Winner</button>
+        <p>{admin ? "logged in" : "not logged in "}</p>
+        <button onClick={() => setAdmin(!admin)}>{`${
+          admin ? "Log out!" : "Log in!"
+        }`}</button>
+      </section>
     </Fragment>
   );
 }
