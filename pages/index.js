@@ -1,29 +1,18 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useReducer, useState } from "react";
 
 export default function Home() {
-  const [githubUsers, setGithubUsers] = useState([]);
+  const [checked, toggle] = useReducer((checked) => !checked, false);
 
-  useEffect(() => {
-    fetch(`https://api.github.com/users`)
-      .then((response) => response.json())
-      .then((data) => setGithubUsers(data));
-  }, []);
-
-  if (githubUsers) {
-    return (
-      <Fragment>
-        <h1>Github Users</h1>
-        <ul>
-          {githubUsers.map((user) => (
-            <li key={user.id}>
-              <img src={user.avatar_url} alt={user.login} />
-              <a href={user.html_url}>{user.login}</a>
-            </li>
-          ))}
-        </ul>
-      </Fragment>
-    );
-  }
-
-  return <p>No users</p>;
+  return (
+    <Fragment>
+      <input
+        type="checkbox"
+        name="status"
+        id="status"
+        value={checked}
+        onChange={toggle}
+      />
+      <p>{checked ? "Delivered" : "Not Delivered"}</p>
+    </Fragment>
+  );
 }
