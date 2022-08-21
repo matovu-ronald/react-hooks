@@ -1,31 +1,22 @@
-import { Fragment, useState } from "react";
-import { useInput } from "../hooks/useInput";
+import { createContext, Fragment } from "react";
+import App from "../components/App";
+
+export const TreesContext = createContext();
+
+const trees = [
+  { id: 1, name: "Oak" },
+  { id: 2, name: "Pine" },
+  { id: 3, name: "Maple" },
+  { id: 4, name: "Ash" },
+  { id: 5, name: "Birch" },
+];
 
 export default function Home() {
-  const [soundProps, resetSoundProps] = useInput("");
-  const [colorProps, resetColorProps] = useInput("#000000");
-
-  const submit = (e) => {
-    e.preventDefault();
-
-    alert(`${soundProps.value} sounds like ${colorProps.value}`);
-    resetColorProps();
-    resetSoundProps();
-  };
-
   return (
     <Fragment>
-      <form onSubmit={submit}>
-        <input
-          {...soundProps}
-          type="text"
-          name="sound"
-          id="sound"
-          placeholder="Sound..."
-        />
-        <input {...colorProps} type="color" name="color" id="color" />
-        <button type="submit">ADD</button>
-      </form>
+      <TreesContext.Provider value={{ trees }}>
+        <App />
+      </TreesContext.Provider>
     </Fragment>
   );
 }
