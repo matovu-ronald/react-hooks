@@ -1,27 +1,29 @@
 import { Fragment, useEffect, useState } from "react";
 
 export default function Home() {
-  const [name, setName] = useState("Matovu");
-  const [admin, setAdmin] = useState(false);
+  const [githubUsers, setGithubUsers] = useState([]);
 
   useEffect(() => {
-    document.title = `Celebrate ${name}`;
-  }, [name]);
+    fetch(`https://api.github.com/users`)
+      .then((response) => response.json())
+      .then((data) => setGithubUsers(data));
+  }, []);
 
-  useEffect(() => {
-    console.log(`The user is : ${admin ? "admin" : "not admin"}`);
-  }, [admin]);
+  if (githubUsers) {
+    return (
+      <Fragment>
+        <h1>Github Users</h1>
+        <ul>
+          {githubUsers.map((user) => (
+            <li key={user.id}>
+              <img src={user.avatar_url} alt={user.login} />
+              <a href={user.html_url}>{user.login}</a>
+            </li>
+          ))}
+        </ul>
+      </Fragment>
+    );
+  }
 
-  return (
-    <Fragment>
-      <section>
-        <p>Congratulations {name}</p>
-        <button onClick={() => setName("Nakibirige")}>Change Winner</button>
-        <p>{admin ? "logged in" : "not logged in "}</p>
-        <button onClick={() => setAdmin(!admin)}>{`${
-          admin ? "Log out!" : "Log in!"
-        }`}</button>
-      </section>
-    </Fragment>
-  );
+  return <p>No users</p>;
 }
